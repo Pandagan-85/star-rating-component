@@ -1,6 +1,6 @@
 import "./star-rating.styles.css";
-import { useState, useCallback } from "react";
-const StarRating = ({ maxRating = 5 }) => {
+import { useState, useCallback, useEffect } from "react";
+const StarRating = ({ maxRating = 5, onChange = () => {} }) => {
   const [currentRating, setCurrentRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
 
@@ -13,9 +13,13 @@ const StarRating = ({ maxRating = 5 }) => {
     [currentRating]
   );
 
+  useEffect(() => {
+    onChange(currentRating);
+  }, [currentRating, onChange]);
+
   return (
     <div className='star-rating-container'>
-      Current Rating: {currentRating}
+      {/* Current Rating: {currentRating} */}
       {
         // stars
         [...Array(maxRating)].map((_, idx) => {
@@ -31,7 +35,8 @@ const StarRating = ({ maxRating = 5 }) => {
               }`}
               //   className={`star ${ratingValue <= currentRating ? "active" : ""}`}
             >
-              {ratingValue}
+              {/* {ratingValue} */}
+              &#9733;
             </p>
           );
         })
