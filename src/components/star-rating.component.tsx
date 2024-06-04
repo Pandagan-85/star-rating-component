@@ -1,15 +1,17 @@
 import "./star-rating.styles.css";
-import { useState } from "react";
-const StarRating = () => {
-  const maxRating: number = 5;
-
+import { useState, useCallback } from "react";
+const StarRating = ({ maxRating = 5 }) => {
   const [currentRating, setCurrentRating] = useState(0);
+  const [hoverRating, setHoverRating] = useState(0);
 
-  const setCurrentRatingClickHanldler = (ratingValue: number) => {
-    currentRating === ratingValue
-      ? setCurrentRating(0)
-      : setCurrentRating(ratingValue);
-  };
+  const setCurrentRatingClickHanldler = useCallback(
+    (ratingValue: number) => {
+      currentRating === ratingValue
+        ? setCurrentRating(0)
+        : setCurrentRating(ratingValue);
+    },
+    [currentRating]
+  );
 
   return (
     <div className='star-rating-container'>
@@ -22,7 +24,12 @@ const StarRating = () => {
             <p
               key={idx}
               onClick={() => setCurrentRatingClickHanldler(ratingValue)}
-              className={`star ${ratingValue <= currentRating ? "active" : ""}`}
+              onMouseEnter={() => setHoverRating(ratingValue)}
+              onMouseLeave={() => setHoverRating(0)}
+              className={`star ${
+                ratingValue <= (hoverRating || currentRating) ? "active" : ""
+              }`}
+              //   className={`star ${ratingValue <= currentRating ? "active" : ""}`}
             >
               {ratingValue}
             </p>

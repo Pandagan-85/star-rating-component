@@ -3,7 +3,7 @@ import StarRating from "./components/star-rating.component";
 export default function App() {
   return (
     <main>
-      <StarRating />
+      <StarRating maxRating={6} />
     </main>
   );
 }
